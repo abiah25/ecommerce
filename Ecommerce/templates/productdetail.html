@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>PRODUCT DETAILS</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Product Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start About Page  -->
+    <div class="about-box-main">
+        <div class="container">
+            <div class="row">
+				<div class="col-lg-6">
+                    <div class="banner-frame"> <img class="img-fluid" src="{{product.image.url}}" alt="" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="noo-sh-title-top">{{product.name}}</h2>
+                    <h4 class="mt-3">Price: <span>Rs.{{product.price}}</span></h4>
+                    <h4 class="mt-3">Currently
+                        {% if product.stock > 0 %}
+                            {{product.stock}} items available
+                        {% else %}
+                            No Items Available
+                        {% endif %}</h4>
+                    <h3 class="mt-3"><b>Short Description</b></h3>
+                    <hr>
+                    <p style="line-height:2;text-align:justify">{{product.description}}</p>
+					{% if user.is_superuser == True %}
+                        <a class="btn hvr-hover" href="{% url 'shop:addstock' product.id %}">Add Stock</a>
+                    {% else %}
+                        {% if product.stock > 0 %}
+                             <a class="btn hvr-hover" href="{% url 'cart:addtocart' product.id %}">ADD TO CART</a>
+                        {% else %}
+                             <h2>OUT OF STOCK</h2>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
